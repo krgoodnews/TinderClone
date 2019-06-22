@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13F3F22542C915EBC9FD967F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3F98660B9D7376901CC14 /* CardView.swift */; };
 		13F3F32197A577A4D8CB5F6E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3FDC0D0F2D262AC46247A /* UIView+Extensions.swift */; };
 		13F3F38DC3CCD468D18FDE0C /* HomeBottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3F7253DAB8DDDC8C8FA2F /* HomeBottomControlsStackView.swift */; };
 		13F3FC9FA9A95D87A7A4B2B7 /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3F23E6CCE71FC70425CF5 /* TopNavigationStackView.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		13F3F23E6CCE71FC70425CF5 /* TopNavigationStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 		13F3F7253DAB8DDDC8C8FA2F /* HomeBottomControlsStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeBottomControlsStackView.swift; sourceTree = "<group>"; };
+		13F3F98660B9D7376901CC14 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		13F3FDC0D0F2D262AC46247A /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		F393C2BC22BE8815007ABBE8 /* TinderClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinderClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F393C2BF22BE8815007ABBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			children = (
 				13F3F7253DAB8DDDC8C8FA2F /* HomeBottomControlsStackView.swift */,
 				13F3F23E6CCE71FC70425CF5 /* TopNavigationStackView.swift */,
+				13F3F98660B9D7376901CC14 /* CardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				13F3F32197A577A4D8CB5F6E /* UIView+Extensions.swift in Sources */,
 				13F3F38DC3CCD468D18FDE0C /* HomeBottomControlsStackView.swift in Sources */,
 				13F3FC9FA9A95D87A7A4B2B7 /* TopNavigationStackView.swift in Sources */,
+				13F3F22542C915EBC9FD967F /* CardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
