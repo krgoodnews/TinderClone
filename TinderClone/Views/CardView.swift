@@ -6,6 +6,8 @@
 import UIKit
 
 class CardView: UIView {
+  
+  private let threshold: CGFloat = 100
 
   fileprivate let imageView = UIImageView(image: UIImage(named: "lady5c"))
 
@@ -26,25 +28,47 @@ class CardView: UIView {
 
     switch gesture.state {
     case .changed:
-      handleChanged(gesture: gesture)
+      handleChanged(gesture)
     case .ended:
-      UIView.animate(withDuration: 0.75,
-              delay: 0,
-              usingSpringWithDamping: 0.6,
-              initialSpringVelocity: 0.1,
-              options: .curveEaseOut,
-              animations: {
-        self.transform = .identity
-      })
+      handleEnded(gesture)
     default:
       ()
     }
   }
 
-  private func handleChanged(gesture: UIPanGestureRecognizer) {
+  private func handleChanged(_ gesture: UIPanGestureRecognizer) {
     let translation = gesture.translation(in: nil)
-    self.transform = CGAffineTransform(translationX: translation.x, y: translation.y)
+
+    // rotation
+    let degrees: CGFloat = translation.x / 20
+    let angle = degrees * .pi / 180
+    let rotationalTransformation = CGAffineTransform(rotationAngle: angle)
+    self.transform = rotationalTransformation.translatedBy(x: translation.x, y: translation.y)
   }
+
+  private func handleEnded(_ gesture: UIPanGestureRecognizer) {
+
+    let shouldDismissCard = gesture.translation(in: nil).x > threshold
+
+    UIView.animate(withDuration: 0.75,
+            delay: 0,
+            usingSpringWithDamping: 0.6,
+            initialSpringVelocity: 0.1,
+            options: .curveEaseOut,
+            animations: {
+              if shouldDismissCard {
+                self.frame = .init(x: 1000, y: 0, width: self.frame.width, height: self.frame.height)
+              } else  {
+                self.transform = .identity
+              }
+            }) { _ in
+      self.transform = .identity
+      self.frame = .init(x: 0, y: 0,
+              width: self.superview!.frame.width,
+              height: self.superview!.frame.height)
+    }
+  }
+
 
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
