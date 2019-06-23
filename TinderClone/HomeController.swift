@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeController.swift
 //  TinderClone
 //
 //  Created by 국윤수 on 23/06/2019.
@@ -8,11 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeController: UIViewController {
 
   let topStackView = TopNavigationStackView()
   let cardsDeckView = UIView()
   let buttonsStackView = HomeBottomControlsStackView()
+
+  let users = [
+    User(name: "Kelly", age: 23, profession: "Music DJ", imageName: "lady5c"),
+    User(name: "Jane", age: 18, profession: "Teacher", imageName: "lady4c")
+  ]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -22,9 +27,18 @@ class ViewController: UIViewController {
   }
 
   fileprivate func setupDummyCards() {
-    let cardView = CardView(frame: .zero)
-    cardsDeckView.addSubview(cardView)
-    cardView.fillSuperview()
+    users.forEach {
+      let cardView = CardView(frame: .zero)
+      cardView.imageView.image = UIImage(named: $0.imageName)
+
+      let attributedText = NSMutableAttributedString(string: $0.name, attributes: [.font: UIFont.systemFont(ofSize: 32, weight: .heavy)])
+      attributedText.append(NSMutableAttributedString(string: "  \($0.age)", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .regular)]))
+      attributedText.append(NSMutableAttributedString(string: "\n\($0.profession)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .regular)]))
+      cardView.informationLabel.attributedText = attributedText
+
+      cardsDeckView.addSubview(cardView)
+      cardView.fillSuperview()
+    }
 
   }
 
