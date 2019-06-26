@@ -7,10 +7,18 @@ import UIKit
 
 class CardView: UIView {
 
+  var cardViewModel: CardViewModel? {
+    didSet {
+      imageView.image = UIImage(named: cardViewModel?.imageName ?? "")
+      informationLabel.attributedText = cardViewModel?.attributedString
+      informationLabel.textAlignment = cardViewModel?.textAlignment ?? .left
+    }
+  }
+
   private let threshold: CGFloat = 100
 
-  let imageView = UIImageView(image: UIImage(named: "lady5c"))
-  let informationLabel = UILabel()
+  fileprivate let imageView = UIImageView(image: UIImage(named: "lady5c"))
+  fileprivate let informationLabel = UILabel()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
