@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		13F3F22542C915EBC9FD967F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3F98660B9D7376901CC14 /* CardView.swift */; };
+		13F3F270E1FC952F9D3793C3 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3FC27C5015B722DA0BAA7 /* CardViewModel.swift */; };
 		13F3F3105607942E0B161472 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3F2AFB6EA6C382B276DB0 /* User.swift */; };
 		13F3F32197A577A4D8CB5F6E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3FDC0D0F2D262AC46247A /* UIView+Extensions.swift */; };
 		13F3F38DC3CCD468D18FDE0C /* HomeBottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3F7253DAB8DDDC8C8FA2F /* HomeBottomControlsStackView.swift */; };
@@ -25,6 +26,7 @@
 		13F3F7253DAB8DDDC8C8FA2F /* HomeBottomControlsStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeBottomControlsStackView.swift; sourceTree = "<group>"; };
 		13F3F98660B9D7376901CC14 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		13F3FA00BE74B497029B79A5 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		13F3FC27C5015B722DA0BAA7 /* CardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		13F3FDC0D0F2D262AC46247A /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		F393C2BC22BE8815007ABBE8 /* TinderClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinderClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F393C2BF22BE8815007ABBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13F3F10DA0257E90E2AE56B4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				13F3FC27C5015B722DA0BAA7 /* CardViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		13F3F133A5FD7A53F9E65B1F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +117,7 @@
 				13F3FF9D81EEE4202F8E8083 /* Views */,
 				13F3FB2B65DF13D02D95159F /* Model */,
 				13F3FEF1BD0464FDB10189FE /* Controller */,
+				13F3F10DA0257E90E2AE56B4 /* ViewModel */,
 			);
 			path = TinderClone;
 			sourceTree = "<group>";
@@ -189,6 +200,7 @@
 				13F3F22542C915EBC9FD967F /* CardView.swift in Sources */,
 				13F3F3105607942E0B161472 /* User.swift in Sources */,
 				13F3F41D4D460EC18FA45853 /* HomeController.swift in Sources */,
+				13F3F270E1FC952F9D3793C3 /* CardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
