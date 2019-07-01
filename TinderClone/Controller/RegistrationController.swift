@@ -22,12 +22,15 @@ class RegistrationController: UIViewController {
   let fullNameTextField: CustomTextField = {
     let tf = CustomTextField()
     tf.placeholder = "Enter full Name"
+    tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
     return tf
   }()
 
   let emailTextField: CustomTextField = {
     let tf = CustomTextField()
+    tf.keyboardType = .emailAddress
     tf.placeholder = "Enter email"
+    tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
     return tf
   }()
 
@@ -35,15 +38,28 @@ class RegistrationController: UIViewController {
     let tf = CustomTextField()
     tf.placeholder = "Enter password"
     tf.isSecureTextEntry = true
+    tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
     return tf
   }()
+  
+  @objc private func handleTextChange(textField: UITextField) {
+    if textField == fullNameTextField {
+      registrationViewModel.fullName = textField.text
+    } else if textField == emailTextField {
+      registrationViewModel.email = textField.text
+    } else {
+      registrationViewModel.password = textField.text
+    }
+  }
+
 
   let registerButton: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle("Register", for: .normal)
     button.setTitleColor(.white, for: .normal)
     button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
-    button.backgroundColor = UIColor.rgb(red: 255, green: 80, blue: 80)
+    button.backgroundColor = .lightGray
+    button.isEnabled = false
     button.heightAnchor.constraint(equalToConstant: 44).isActive = true
     button.layer.cornerRadius = 22
     return button
@@ -56,6 +72,23 @@ class RegistrationController: UIViewController {
     setupLayout()
     setupNotificationObservers()
     setupTapGesture()
+    setupRegistrationViewModelObserver()
+  }
+
+  let registrationViewModel = RegistrationViewModel()
+  private func setupRegistrationViewModelObserver() {
+    registrationViewModel.isFormValidObserver = { (isFormValid) in
+      print("Form is changing, is it valid?", isFormValid)
+
+      self.registerButton.isEnabled = isFormValid
+      if isFormValid {
+        self.registerButton.backgroundColor = UIColor.rgb(red: 200, green: 70, blue: 30)
+        self.registerButton.setTitleColor(.white, for: .normal)
+      } else {
+        self.registerButton.backgroundColor = .lightGray
+        self.registerButton.setTitleColor(.gray, for: .normal)
+      }
+    }
   }
 
   override func viewWillDisappear(_ animated: Bool) {
@@ -85,7 +118,6 @@ class RegistrationController: UIViewController {
   }
 
   @objc private func handleKeyboardShow(notification: Notification) {
-    print("notification.userInfo = \(notification.userInfo)")
     guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
     
     let keyboardFrame = value.cgRectValue
