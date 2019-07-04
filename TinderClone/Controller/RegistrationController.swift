@@ -17,10 +17,12 @@ class RegistrationController: UIViewController {
     button.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
     button.backgroundColor = .white
     button.setTitleColor(.black, for: .normal)
-    button.heightAnchor.constraint(equalToConstant: 275).isActive = true
     button.layer.cornerRadius = 16
     return button
   }()
+
+  lazy var selectPhotoButtonWidthAnchor = selectPhotoButton.widthAnchor.constraint(equalToConstant: 275)
+  lazy var selectPhotoButtonHeightAnchor = selectPhotoButton.heightAnchor.constraint(equalToConstant: 275)
 
   let fullNameTextField: CustomTextField = {
     let tf = CustomTextField()
@@ -54,7 +56,6 @@ class RegistrationController: UIViewController {
       registrationViewModel.password = textField.text
     }
   }
-
 
   let registerButton: UIButton = {
     let button = UIButton(type: .system)
@@ -108,7 +109,7 @@ class RegistrationController: UIViewController {
 
   let registrationViewModel = RegistrationViewModel()
   private func setupRegistrationViewModelObserver() {
-    registrationViewModel.isFormValidObserver = { (isFormValid) in
+    registrationViewModel.isFormValidObserver = { [unowned self] (isFormValid) in
       print("Form is changing, is it valid?", isFormValid)
 
       self.registerButton.isEnabled = isFormValid
@@ -182,8 +183,14 @@ class RegistrationController: UIViewController {
     super.traitCollectionDidChange(previousTraitCollection)
     if self.traitCollection.verticalSizeClass == .compact {
       overallStackView.axis = .horizontal
+      verticalStackView.distribution = .fillEqually
+      selectPhotoButtonHeightAnchor.isActive = false
+      selectPhotoButtonWidthAnchor.isActive = true
     } else {
       overallStackView.axis = .vertical
+      verticalStackView.distribution = .fill
+      selectPhotoButtonHeightAnchor.isActive = true
+      selectPhotoButtonWidthAnchor.isActive = false
     }
   }
 
@@ -214,4 +221,3 @@ class RegistrationController: UIViewController {
     gradientLayer.frame = view.bounds
   }
 }
-
