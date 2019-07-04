@@ -8,12 +8,16 @@ import UIKit
 class CustomTextField: UITextField {
 
   let padding: CGFloat
-  init(padding: CGFloat = 24) {
+  let height: CGFloat
+
+  init(padding: CGFloat = 24, height: CGFloat = 50) {
     self.padding = padding
+    self.height = height
 
     super.init(frame: .zero)
-    self.layer.cornerRadius = 25
+    self.layer.cornerRadius = height / 2
     self.backgroundColor = .white
+    invalidateIntrinsicContentSize()
   }
 
   override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -25,11 +29,11 @@ class CustomTextField: UITextField {
   }
 
   override var intrinsicContentSize: CGSize {
-    return .init(width: 0, height: 50)
+    return .init(width: 0, height: height)
   }
 
   required init?(coder aDecoder: NSCoder) {
-    fatalError("init@coder")
+    fatalError("init(coder:) has not been implemented")
   }
 }
 
