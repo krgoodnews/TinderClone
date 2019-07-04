@@ -82,3 +82,7 @@ fastlane/test_output
 iOSInjectionProject/
 *.iml
 *.xml
+Pods
+Podfile.lock
+TinderClone.xcworkspace/xcshareddata
+GoogleService-Info.plist
