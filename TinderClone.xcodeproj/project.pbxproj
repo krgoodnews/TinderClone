@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		13F3F22542C915EBC9FD967F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3F98660B9D7376901CC14 /* CardView.swift */; };
+		13F3F22F4F52E5C7C912F163 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3F21941B3F7E95FC2DE0C /* Bindable.swift */; };
 		13F3F270E1FC952F9D3793C3 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3FC27C5015B722DA0BAA7 /* CardViewModel.swift */; };
 		13F3F3105607942E0B161472 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3F2AFB6EA6C382B276DB0 /* User.swift */; };
 		13F3F32197A577A4D8CB5F6E /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F3FDC0D0F2D262AC46247A /* UIView+Extensions.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13F3F21941B3F7E95FC2DE0C /* Bindable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		13F3F23E6CCE71FC70425CF5 /* TopNavigationStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 		13F3F2AFB6EA6C382B276DB0 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		13F3F6DCAE29A18EE6F98261 /* RegistrationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				13F3FA00BE74B497029B79A5 /* HomeController.swift */,
 				13F3F6DCAE29A18EE6F98261 /* RegistrationController.swift */,
 				E6587D5B22CA516600A19548 /* RegistrationViewModel.swift */,
+				13F3F21941B3F7E95FC2DE0C /* Bindable.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				13F3FD3A44A0FFB2218AC685 /* Advertiser.swift in Sources */,
 				13F3FB04B7B50BDDCF7C04C5 /* RegistrationController.swift in Sources */,
 				13F3F40420BB52F6FE965953 /* CustomTextField.swift in Sources */,
+				13F3F22F4F52E5C7C912F163 /* Bindable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

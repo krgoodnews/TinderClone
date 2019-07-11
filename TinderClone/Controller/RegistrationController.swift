@@ -18,8 +18,18 @@ class RegistrationController: UIViewController {
     button.backgroundColor = .white
     button.setTitleColor(.black, for: .normal)
     button.layer.cornerRadius = 16
+    button.imageView?.contentMode = .scaleAspectFill
+    button.clipsToBounds = true
+    button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
     return button
   }()
+
+  @objc func handleSelectPhoto() {
+    print("Select Photo")
+    let imagePickerController = UIImagePickerController()
+    imagePickerController.delegate = self
+    present(imagePickerController, animated: true)
+  }
 
   lazy var selectPhotoButtonWidthAnchor = selectPhotoButton.widthAnchor.constraint(equalToConstant: 275)
   lazy var selectPhotoButtonHeightAnchor = selectPhotoButton.heightAnchor.constraint(equalToConstant: 275)
@@ -109,17 +119,16 @@ class RegistrationController: UIViewController {
 
   let registrationViewModel = RegistrationViewModel()
   private func setupRegistrationViewModelObserver() {
-    registrationViewModel.isFormValidObserver = { [unowned self] (isFormValid) in
-      print("Form is changing, is it valid?", isFormValid)
+    registrationViewModel.bindableIsFormValid.bind { [unowned self] (isFormValid) in
+      guard let isFormValid = isFormValid else { return }
 
       self.registerButton.isEnabled = isFormValid
-      if isFormValid {
-        self.registerButton.backgroundColor = UIColor.rgb(red: 200, green: 70, blue: 30)
-        self.registerButton.setTitleColor(.white, for: .normal)
-      } else {
-        self.registerButton.backgroundColor = .lightGray
-        self.registerButton.setTitleColor(.gray, for: .normal)
-      }
+      self.registerButton.backgroundColor = isFormValid ? UIColor.rgb(red: 200, green: 70, blue: 30) : .lightGray
+      self.registerButton.setTitleColor(isFormValid ? .white : .gray, for: .normal)
+    }
+
+    registrationViewModel.bindableImage.bind { [unowned self] img in
+      self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
   }
 
@@ -219,5 +228,17 @@ class RegistrationController: UIViewController {
     gradientLayer.locations = [0, 1]
     view.layer.addSublayer(gradientLayer)
     gradientLayer.frame = view.bounds
+  }
+}
+
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+  public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+    let image = (info[.originalImage] as? UIImage)
+    registrationViewModel.bindableImage.value = image
+    dismiss(animated: true)
+  }
+
+  public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    dismiss(animated: true)
   }
 }
