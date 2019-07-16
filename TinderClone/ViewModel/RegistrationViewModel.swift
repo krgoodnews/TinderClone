@@ -9,6 +9,7 @@
 import UIKit
 
 import Firebase
+import FirebaseFirestore
 
 class RegistrationViewModel {
 
@@ -45,29 +46,52 @@ class RegistrationViewModel {
 
       print("successfully registered user:", result?.user.uid ?? "")
 
-      // Only upload images to Firebase Storage once you are auth
-      let filename = UUID().uuidString
-      let ref = Storage.storage().reference(withPath: "/images/\(filename)")
-      let imageData = self.bindableImage.value?.jpegData(compressionQuality: 0.75) ?? Data()
-      ref.putData(imageData, metadata: nil) { _, error in
+      self.saveImageToFirebase(completion: completion)
+    }
+  }
 
+  fileprivate func saveImageToFirebase(completion: @escaping (Error?) -> ()) {
+    // Only upload images to Firebase Storage once you are auth
+    let filename = UUID().uuidString
+    let ref = Storage.storage().reference(withPath: "/images/\(filename)")
+    let imageData = self.bindableImage.value?.jpegData(compressionQuality: 0.75) ?? Data()
+    ref.putData(imageData, metadata: nil) { _, error in
+
+      if let err = error {
+        completion(err)
+        return // bail
+      }
+
+      print("Finished uploading image to storage")
+      ref.downloadURL { url, error in
         if let err = error {
           completion(err)
-          return // bail
+          return
         }
 
-        print("Finished uploading image to storage")
-        ref.downloadURL { url, error in
-          if let err = error {
-            completion(err)
-            return
-          }
+        self.bindableIsRegistering.value = false
+        print("Download url of our image is:", url?.absoluteString ?? "")
 
-          self.bindableIsRegistering.value = false
-          print("Download url of our image is:", url?.absoluteString ?? "")
-          // store the download url into Firestore
-        }
+        let imageURL = url?.absoluteString ?? ""
+        self.saveInfoToFirestore(imageURL: imageURL, completion: completion)
       }
+    }
+  }
+
+  fileprivate func saveInfoToFirestore(imageURL: String,
+                                       completion: @escaping (Error?) -> ()) {
+
+    let uid = Auth.auth().currentUser?.uid ?? ""
+    let docData = ["fullName": fullName ?? "",
+                   "imageURL1": imageURL,
+                   "uid": uid]
+    Firestore.firestore().collection("users").document(uid).setData(docData) { error in 
+      if let err = error {
+        completion(err)
+        return
+      }
+
+      completion(nil)
     }
   }
   

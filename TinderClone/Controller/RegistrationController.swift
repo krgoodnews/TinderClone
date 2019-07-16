@@ -45,6 +45,7 @@ class RegistrationController: UIViewController {
   let emailTextField: CustomTextField = {
     let tf = CustomTextField()
     tf.keyboardType = .emailAddress
+    tf.autocapitalizationType = .none
     tf.placeholder = "Enter email"
     tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
     return tf
@@ -77,13 +78,13 @@ class RegistrationController: UIViewController {
     button.isEnabled = false
     button.heightAnchor.constraint(equalToConstant: 44).isActive = true
     button.layer.cornerRadius = 22
-    button.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
+    button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
     return button
   }()
 
   let registerHUD = JGProgressHUD(style: .dark)
 
-  @objc fileprivate func didTapRegister() {
+  @objc fileprivate func handleRegister() {
     self.handleTapDismiss()
     print("Register")
 
