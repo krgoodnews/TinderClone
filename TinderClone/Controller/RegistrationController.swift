@@ -6,6 +6,7 @@
 import UIKit
 
 import Firebase
+import FirebaseStorage
 import JGProgressHUD
 
 class RegistrationController: UIViewController {
@@ -80,25 +81,27 @@ class RegistrationController: UIViewController {
     return button
   }()
 
+  let registerHUD = JGProgressHUD(style: .dark)
+
   @objc fileprivate func didTapRegister() {
     self.handleTapDismiss()
     print("Register")
 
-    guard let email = emailTextField.text else { return }
-    guard let password = passwordTextField.text else { return }
+    registrationViewModel.bindableIsRegistering.value = true
 
-    Auth.auth().createUser(withEmail: email, password: password) { result, error in
-      if let error = error {
-        print("error = \(error)")
-        self.showHUDWithError(error: error)
+    registrationViewModel.performRegistration { [weak self] error in
+      if let err = error {
+        self?.showHUDWithError(error: err)
         return
       }
 
-      print("successfully registered user:", result?.user.uid ?? "")
+      print("Finished Registering our user")
     }
   }
 
   private func showHUDWithError(error: Error) {
+    registerHUD.dismiss()
+
     let hud = JGProgressHUD(style: .dark)
     hud.textLabel.text = "Failed registration"
     hud.detailTextLabel.text = error.localizedDescription
@@ -130,11 +133,15 @@ class RegistrationController: UIViewController {
     registrationViewModel.bindableImage.bind { [unowned self] img in
       self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
-  }
 
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    NotificationCenter.default.removeObserver(self)
+    registrationViewModel.bindableIsRegistering.bind { [unowned self] isRegistering in
+      if isRegistering == true {
+        self.registerHUD.textLabel.text = "Register"
+        self.registerHUD.show(in: self.view)
+      } else {
+        self.registerHUD.dismiss()
+      }
+    }
   }
 
   // MARK: - Private
