@@ -75,6 +75,7 @@
 		13F3F10DA0257E90E2AE56B4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				E6587D5B22CA516600A19548 /* RegistrationViewModel.swift */,
 				13F3FC27C5015B722DA0BAA7 /* CardViewModel.swift */,
 			);
 			path = ViewModel;
@@ -102,7 +103,6 @@
 			children = (
 				13F3FA00BE74B497029B79A5 /* HomeController.swift */,
 				13F3F6DCAE29A18EE6F98261 /* RegistrationController.swift */,
-				E6587D5B22CA516600A19548 /* RegistrationViewModel.swift */,
 				13F3F21941B3F7E95FC2DE0C /* Bindable.swift */,
 			);
 			path = Controller;
