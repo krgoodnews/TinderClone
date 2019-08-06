@@ -4,13 +4,17 @@
 //
 
 import UIKit
+import SDWebImage
 
 class CardView: UIView {
 
   var cardViewModel: CardViewModel? {
     didSet {
       let imageName = cardViewModel?.imageNames.first ?? ""
-      imageView.image = UIImage(named: imageName)
+      if let url = URL(string: imageName) {
+        imageView.sd_setImage(with: url)
+      }
+
       informationLabel.attributedText = cardViewModel?.attributedString
       informationLabel.textAlignment = cardViewModel?.textAlignment ?? .left
 
@@ -40,7 +44,7 @@ class CardView: UIView {
 
   private let threshold: CGFloat = 80
 
-  fileprivate let imageView = UIImageView(image: UIImage(named: "lady5c"))
+  fileprivate let imageView = UIImageView()
   fileprivate let gradientLayer = CAGradientLayer()
   fileprivate let informationLabel = UILabel()
 

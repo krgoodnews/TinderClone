@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class HomeController: UIViewController {
 
@@ -14,15 +15,7 @@ class HomeController: UIViewController {
   let cardsDeckView = UIView()
   let buttonsStackView = HomeBottomControlsStackView()
 
-  let cardViewModels: [CardViewModel] = {
-    let producers: [ProducesCardViewModel] = [
-      Advertiser(title: "Slide Out Menu", brandName: "Lets Build That App", posterPhotoName: "slide_out_menu_poster"),
-      User(name: "Kelly", age: 23, profession: "Music DJ", imageNames: ["kelly1", "kelly2"]),
-      User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"])
-    ]
-
-    return producers.map { $0.toCardViewModel() }
-  }()
+  var cardViewModels = [CardViewModel]()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -30,6 +23,23 @@ class HomeController: UIViewController {
     topStackView.settingsButton.addTarget(self, action: #selector(didTapSettings), for: .touchUpInside)
     setupLayout()
     setupDummyCards()
+    fetchUsersFromFirestore()
+  }
+
+  private func fetchUsersFromFirestore() {
+    Firestore.firestore().collection("users").getDocuments { snapshot, error in 
+      if let err = error {
+        print("--- Failed to fetch users:", err)
+        return
+      }
+
+      snapshot?.documents.forEach { documentSnapshot in
+        let userDictionary = documentSnapshot.data()
+        let user = User(dic: userDictionary)
+        self.cardViewModels.append(user.toCardViewModel())
+      }
+      self.setupDummyCards()
+    }
   }
 
   @objc private func didTapSettings() {
@@ -48,6 +58,7 @@ class HomeController: UIViewController {
   }
 
   private func setupLayout() {
+    view.backgroundColor = .white
     let overallStackView = UIStackView(arrangedSubviews: [topStackView, cardsDeckView, buttonsStackView])
     overallStackView.axis = .vertical
     view.addSubview(overallStackView)
