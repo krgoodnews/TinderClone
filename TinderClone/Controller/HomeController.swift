@@ -22,23 +22,29 @@ class HomeController: UIViewController {
 
     topStackView.settingsButton.addTarget(self, action: #selector(didTapSettings), for: .touchUpInside)
     setupLayout()
-    setupDummyCards()
+    setupFirestoreUserCards()
     fetchUsersFromFirestore()
   }
 
   private func fetchUsersFromFirestore() {
-    Firestore.firestore().collection("users").getDocuments { snapshot, error in 
+    let query = Firestore.firestore().collection("users")
+//            .whereField("age", isLessThan: 31)
+//            .whereField("age", isGreaterThan: 19)
+//    .whereField("friends", arrayContains: "Mike")
+
+    query.getDocuments { snapshot, error in
       if let err = error {
         print("--- Failed to fetch users:", err)
         return
       }
 
+      print("snapshot = \(snapshot)")
       snapshot?.documents.forEach { documentSnapshot in
         let userDictionary = documentSnapshot.data()
         let user = User(dic: userDictionary)
         self.cardViewModels.append(user.toCardViewModel())
       }
-      self.setupDummyCards()
+      self.setupFirestoreUserCards()
     }
   }
 
@@ -48,7 +54,7 @@ class HomeController: UIViewController {
     present(registrationController, animated: true)
   }
 
-  fileprivate func setupDummyCards() {
+  fileprivate func setupFirestoreUserCards() {
     cardViewModels.forEach {
       let cardView = CardView(frame: .zero)
       cardView.cardViewModel = $0
